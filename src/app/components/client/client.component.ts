@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Client } from '../../model/class/Client';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
 import { APIResponseModel } from '../../model/interface/role';
 
@@ -28,17 +28,25 @@ export class ClientComponent implements OnInit {
     })
   }
 
-  onSaveClient() {
-    debugger;
+  onReset(form: NgForm) {
+    form.resetForm();
+    this.clientObj = new Client();
+  }
+
+  onSaveClient(form: NgForm) {
     this.clientService.addUpdate(this.clientObj).subscribe((res: APIResponseModel) => {
       if (res.result) {
-        alert("Client Created Sucess");
+        alert(res.message);
         this.loadClient();
-        this.clientObj = new Client();
+        this.onReset(form);
       } else {
         alert(res.message);
       }
     })
+  }
+
+  onEdit(data: Client) {
+    this.clientObj = { ...data };
   }
 
   onDelete(id: number) {
@@ -46,7 +54,7 @@ export class ClientComponent implements OnInit {
     if (isDelete) {
       this.clientService.deleteClientById(id).subscribe((res: APIResponseModel) => {
         if (res.result) {
-          alert("Client Delete Sucess");
+          alert(res.message);
           this.loadClient();
         } else {
           alert(res.message);

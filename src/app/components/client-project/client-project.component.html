@@ -2,7 +2,7 @@
     <div class="col-8">
         <div class="card">
             <div class="card-header bg-success text-white fw-bold">
-                Client List
+                Project List
             </div>
             <div class="card-body">
                 <div class="row">
@@ -19,13 +19,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (item of clientList; track $index) {
+                                @for (item of projectList; track $index) {
                                 <tr>
                                     <td>{{$index + 1}}</td>
-                                    <td>{{item.companyName}}</td>
-                                    <td>{{item.contactPersonName}}</td>
-                                    <td>{{item.contactNo}}</td>
-                                    <td>{{item.city}}</td>
+                                    <td>{{item.projectName}}</td>
+                                    <td>{{item.startDate}}</td>
+                                    <td>{{item.leadByEmpId}}</td>
+                                    <td>{{item.completedDate}}</td>
                                     <td>
                                         <button class="btn btn-primary me-2" (click)="onEdit(item)">Edit</button>
                                         <button class="btn btn-danger" (click)="onDelete(item.clientId)">Delete</button>
@@ -43,7 +43,7 @@
     <div class="col-4">
         <div class="card">
             <div class="card-header bg-success text-white fw-bold">
-                New Client
+                New Project
             </div>
             <div class="card-body">
                 <form #form="ngForm">
@@ -51,7 +51,7 @@
                         <div class="col-6">
                             <label for="">Person Name <span class="text-danger">*</span></label>
                             <input type="text" #personName="ngModel" minlength="5" required
-                                [(ngModel)]="clientObj.contactPersonName" class="form-control" name="contactPersonName">
+                                [(ngModel)]="projectObj.projectName" class="form-control" name="contactPersonName">
                             @if (personName.touched) {
                             <div class="text-danger">
                                 @if (personName?.errors?.['required']) {
@@ -66,7 +66,7 @@
                         <div class="col-6">
                             <label for="">Company Name <span class="text-danger">*</span></label>
                             <input type="text" #companyName="ngModel" minlength="3" required
-                                [(ngModel)]="clientObj.companyName" class="form-control" name="companyName">
+                                [(ngModel)]="projectObj.clientProjectId" class="form-control" name="companyName">
                             @if (companyName.touched) {
                             <div class="text-danger">
                                 @if (companyName?.errors?.['required']) {
@@ -81,7 +81,7 @@
                         <div class="col-6">
                             <label for="">Contact No <span class="text-danger">*</span></label>
                             <input type="text" #contactNo="ngModel" minlength="10" required
-                                [(ngModel)]="clientObj.contactNo" class="form-control" name="contactNo">
+                                [(ngModel)]="projectObj.startDate" class="form-control" name="contactNo">
                             @if (contactNo.touched) {
                             <div class="text-danger">
                                 @if (contactNo?.errors?.['required']) {
@@ -95,29 +95,32 @@
                         </div>
                         <div class="col-6">
                             <label for="">City</label>
-                            <input type="text" [(ngModel)]="clientObj.city" class="form-control" name="city">
+                            <input type="text" [(ngModel)]="projectObj.expectedEndDate" class="form-control"
+                                name="city">
                         </div>
                         <div class="col-6">
                             <label for="">State</label>
-                            <input type="text" [(ngModel)]="clientObj.state" class="form-control" name="state">
+                            <input type="text" [(ngModel)]="projectObj.leadByEmpId" class="form-control" name="state">
                         </div>
                         <div class="col-6">
                             <label for="">Pincode</label>
-                            <input type="text" [(ngModel)]="clientObj.pincode" class="form-control" name="pincode">
+                            <input type="text" [(ngModel)]="projectObj.completedDate" class="form-control"
+                                name="pincode">
                         </div>
                         <div class="col-6">
                             <label for="">Address</label>
-                            <textarea [(ngModel)]="clientObj.address" class="form-control" name="address"></textarea>
+                            <textarea [(ngModel)]="projectObj.totalEmpWorking" class="form-control"
+                                name="address"></textarea>
                         </div>
                         <div class="col-6">
                             <label for="">Employee Strength</label>
-                            <input type="text" [(ngModel)]="clientObj.employeeStrength" class="form-control"
+                            <input type="text" [(ngModel)]="projectObj.completedDate" class="form-control"
                                 name="employeeStrength">
                         </div>
                         <div class="col-6">
                             <label for="">GstNo <span class="text-danger">*</span></label>
-                            <input type="text" #gstNo="ngModel" minlength="2" required [(ngModel)]="clientObj.gstNo"
-                                class="form-control" name="gstNo">
+                            <input type="text" #gstNo="ngModel" minlength="2" required
+                                [(ngModel)]="projectObj.completedDate" class="form-control" name="gstNo">
                             @if (gstNo.touched) {
                             <div class="text-danger">
                                 @if (gstNo?.errors?.['required']) {
@@ -131,8 +134,8 @@
                         </div>
                         <div class="col-6">
                             <label for="">RegNo <span class="text-danger">*</span></label>
-                            <input type="text" #regNo="ngModel" minlength="2" required [(ngModel)]="clientObj.regNo"
-                                class="form-control" name="regNo">
+                            <input type="text" #regNo="ngModel" minlength="2" required
+                                [(ngModel)]="projectObj.totalEmpWorking" class="form-control" name="regNo">
                             @if (regNo.touched) {
                             <div class="text-danger">
                                 @if (regNo?.errors?.['required']) {
@@ -151,11 +154,11 @@
                     <div class="row pt-2">
                         <div class="col-6 text-center">
                             <button class="btn btn-secondary" [disabled]="!form.valid"
-                                (click)="onReset(form)">Reset</button>
+                                (click)="onReset()">Reset</button>
                         </div>
                         <div class="col-6 text-center">
-                            <button class="btn btn-success" [disabled]="!form.valid" (click)="onSaveClient(form)">
-                                {{clientObj.clientId != 0 ? 'Update Client' : 'Save Client'}}
+                            <button class="btn btn-success" [disabled]="!form.valid" (click)="onSaveClient()">
+                                {{projectObj.clientId != 0 ? 'Update Client' : 'Save Client'}}
                             </button>
                         </div>
                     </div>
