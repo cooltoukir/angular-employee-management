@@ -80,7 +80,7 @@
                         </div>
                         <div class="col-6">
                             <label for="">Contact No <span class="text-danger">*</span></label>
-                            <input type="text" #contactNo="ngModel" minlength="10" required
+                            <input type="text" #contactNo="ngModel" minlength="4" required
                                 [(ngModel)]="clientObj.contactNo" class="form-control" name="contactNo">
                             @if (contactNo.touched) {
                             <div class="text-danger">
@@ -88,7 +88,7 @@
                                 <span>This Is Required</span>
                                 }
                                 @if (contactNo?.errors?.['minlength']) {
-                                <span>Min 10 Chars Required</span>
+                                <span>Min 4 Chars Required</span>
                                 }
                             </div>
                             }
@@ -150,11 +150,10 @@
                     </div>
                     <div class="row pt-2">
                         <div class="col-6 text-center">
-                            <button class="btn btn-secondary" [disabled]="!form.valid"
-                                (click)="onReset(form)">Reset</button>
+                            <button class="btn btn-secondary" (click)="onReset(form)">Reset</button>
                         </div>
                         <div class="col-6 text-center">
-                            <button class="btn btn-success" [disabled]="!form.valid" (click)="onSaveClient(form)">
+                            <button class="btn btn-success" [disabled]="form.invalid" (click)="onSaveClient(form)">
                                 {{clientObj.clientId != 0 ? 'Update Client' : 'Save Client'}}
                             </button>
                         </div>

@@ -10,25 +10,24 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Sr No</th>
-                                    <th>Company Name</th>
-                                    <th>Person Name</th>
-                                    <th>Contact No</th>
-                                    <th>City</th>
+                                    <th>projectName</th>
+                                    <th>empName</th>
+                                    <th>startDate</th>
+                                    <th>clientName</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (item of projectList; track $index) {
+                                @for (item of clientProjectsList; track $index) {
                                 <tr>
-                                    <td>{{$index + 1}}</td>
                                     <td>{{item.projectName}}</td>
+                                    <td>{{item.empName}}</td>
                                     <td>{{item.startDate}}</td>
-                                    <td>{{item.leadByEmpId}}</td>
-                                    <td>{{item.completedDate}}</td>
+                                    <td>{{item.clientName}}</td>
                                     <td>
-                                        <button class="btn btn-primary me-2" (click)="onEdit(item)">Edit</button>
-                                        <button class="btn btn-danger" (click)="onDelete(item.clientId)">Delete</button>
+                                        <button class="btn btn-primary me-2">Edit</button>
+                                        <button class="btn btn-danger"
+                                            (click)="onDelete(item.clientProjectId)">Delete</button>
                                     </td>
                                 </tr>
                                 }
@@ -46,106 +45,113 @@
                 New Project
             </div>
             <div class="card-body">
-                <form #form="ngForm">
+                <form [formGroup]="projectForm" (ngSubmit)="onSavePorject()">
                     <div class="row">
                         <div class="col-6">
-                            <label for="">Person Name <span class="text-danger">*</span></label>
-                            <input type="text" #personName="ngModel" minlength="5" required
-                                [(ngModel)]="projectObj.projectName" class="form-control" name="contactPersonName">
-                            @if (personName.touched) {
-                            <div class="text-danger">
-                                @if (personName?.errors?.['required']) {
-                                <span>This Is Required</span>
-                                }
-                                @if (personName?.errors?.['minlength']) {
-                                <span>Min 5 Chars Required</span>
-                                }
-                            </div>
+                            <label for="">Project Name <span class="text-danger">*</span></label>
+                            <input type="text" formControlName="projectName" class="form-control">
+                            @if (projectForm.controls['projectName'].touched) {
+                                <div class="text-danger">
+                                    @if (projectForm.controls['projectName'].errors?.['required']) {
+                                        <span>This is Required</span>
+                                    }
+                                    @if (projectForm.controls['projectName'].errors?.['minlength']) {
+                                        <span>Min 4 Char Required</span>
+                                    }
+                                </div>
                             }
                         </div>
                         <div class="col-6">
-                            <label for="">Company Name <span class="text-danger">*</span></label>
-                            <input type="text" #companyName="ngModel" minlength="3" required
-                                [(ngModel)]="projectObj.clientProjectId" class="form-control" name="companyName">
-                            @if (companyName.touched) {
-                            <div class="text-danger">
-                                @if (companyName?.errors?.['required']) {
-                                <span>This Is Required</span>
-                                }
-                                @if (companyName?.errors?.['minlength']) {
-                                <span>Min 3 Chars Required</span>
-                                }
-                            </div>
+                            <label for="">Start Date <span class="text-danger">*</span></label>
+                            <input type="date" formControlName="startDate" class="form-control">
+                            @if (projectForm.controls['startDate'].touched) {
+                                <div class="text-danger">
+                                    @if (projectForm.controls['startDate'].errors?.['required']) {
+                                        <span>This is Required</span>
+                                    }
+                                </div>
                             }
                         </div>
                         <div class="col-6">
-                            <label for="">Contact No <span class="text-danger">*</span></label>
-                            <input type="text" #contactNo="ngModel" minlength="10" required
-                                [(ngModel)]="projectObj.startDate" class="form-control" name="contactNo">
-                            @if (contactNo.touched) {
-                            <div class="text-danger">
-                                @if (contactNo?.errors?.['required']) {
-                                <span>This Is Required</span>
-                                }
-                                @if (contactNo?.errors?.['minlength']) {
-                                <span>Min 10 Chars Required</span>
-                                }
-                            </div>
+                            <label for="">Expected End Date <span class="text-danger">*</span></label>
+                            <input type="date" formControlName="expectedEndDate" class="form-control">
+                            @if (projectForm.controls['expectedEndDate'].touched) {
+                                <div class="text-danger">
+                                    @if (projectForm.controls['expectedEndDate'].errors?.['required']) {
+                                        <span>This is Required</span>
+                                    }
+                                </div>
                             }
                         </div>
                         <div class="col-6">
-                            <label for="">City</label>
-                            <input type="text" [(ngModel)]="projectObj.expectedEndDate" class="form-control"
-                                name="city">
+                            <label for="">Contact Name</label>
+                            <input type="text" formControlName="contactPerson" class="form-control">
                         </div>
                         <div class="col-6">
-                            <label for="">State</label>
-                            <input type="text" [(ngModel)]="projectObj.leadByEmpId" class="form-control" name="state">
+                            <label for="">Contact Mobile</label>
+                            <input type="text" formControlName="contactPersonContactNo" class="form-control">
                         </div>
                         <div class="col-6">
-                            <label for="">Pincode</label>
-                            <input type="text" [(ngModel)]="projectObj.completedDate" class="form-control"
-                                name="pincode">
+                            <label for="">Contact Email</label>
+                            <input type="text" formControlName="contactPersonEmailId" class="form-control">
                         </div>
                         <div class="col-6">
-                            <label for="">Address</label>
-                            <textarea [(ngModel)]="projectObj.totalEmpWorking" class="form-control"
-                                name="address"></textarea>
-                        </div>
-                        <div class="col-6">
-                            <label for="">Employee Strength</label>
-                            <input type="text" [(ngModel)]="projectObj.completedDate" class="form-control"
-                                name="employeeStrength">
-                        </div>
-                        <div class="col-6">
-                            <label for="">GstNo <span class="text-danger">*</span></label>
-                            <input type="text" #gstNo="ngModel" minlength="2" required
-                                [(ngModel)]="projectObj.completedDate" class="form-control" name="gstNo">
-                            @if (gstNo.touched) {
-                            <div class="text-danger">
-                                @if (gstNo?.errors?.['required']) {
-                                <span>This Is Required</span>
-                                }
-                                @if (gstNo?.errors?.['minlength']) {
-                                <span>Min 2 Chars Required</span>
-                                }
-                            </div>
+                            <label for="">Total Employee Count <span class="text-danger">*</span></label>
+                            <input type="text" formControlName="totalEmpWorking" class="form-control">
+                            @if (projectForm.controls['totalEmpWorking'].touched) {
+                                <div class="text-danger">
+                                    @if (projectForm.controls['totalEmpWorking'].errors?.['required']) {
+                                        <span>This is Required</span>
+                                    }
+                                </div>
                             }
                         </div>
                         <div class="col-6">
-                            <label for="">RegNo <span class="text-danger">*</span></label>
-                            <input type="text" #regNo="ngModel" minlength="2" required
-                                [(ngModel)]="projectObj.totalEmpWorking" class="form-control" name="regNo">
-                            @if (regNo.touched) {
-                            <div class="text-danger">
-                                @if (regNo?.errors?.['required']) {
-                                <span>This Is Required</span>
-                                }
-                                @if (regNo?.errors?.['minlength']) {
-                                <span>Min 2 Chars Required</span>
-                                }
-                            </div>
+                            <label for="">Project Costing <span class="text-danger">*</span></label>
+                            <input type="text" formControlName="projectCost" class="form-control">
+                            @if (projectForm.controls['projectCost'].touched) {
+                                <div class="text-danger">
+                                    @if (projectForm.controls['projectCost'].errors?.['required']) {
+                                        <span>This is Required</span>
+                                    }
+                                </div>
                             }
+                        </div>
+                        <div class="col-12">
+                            <label for="">Project Description</label>
+                            <textarea formControlName="projectDetails" class="form-control"> </textarea>
+                        </div>
+                        <div class="col-6">
+                            <label for="">Select Client <span class="text-danger">*</span></label>
+                            <select formControlName="clientId" class="form-control">
+                                <option value="">Select Client</option>
+                                @for (item of clientList; track $index) {
+                                <option [value]="item.clientId">{{item.companyName}}</option>
+                                }
+                                @if (projectForm.controls['clientId'].touched) {
+                                    <div class="text-danger">
+                                        @if (projectForm.controls['clientId'].errors?.['required']) {
+                                            <span>This is Required</span>
+                                        }
+                                    </div>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="">Lead By <span class="text-danger">*</span></label>
+                            <select formControlName="leadByEmpId" class="form-control">
+                                <option value="">Select Employee</option>
+                                @for (item of employeeList; track $index) {
+                                <option [value]="item.empId">{{item.empName}} - {{item.empCode}}</option>
+                                }
+                                @if (projectForm.controls['leadByEmpId'].touched) {
+                                    <div class="text-danger">
+                                        @if (projectForm.controls['leadByEmpId'].errors?.['required']) {
+                                            <span>This is Required</span>
+                                        }
+                                    </div>
+                                }
+                            </select>
                         </div>
                         <div class="col-6">
                             <label for="" class="text-danger">* Required fields</label>
@@ -153,13 +159,10 @@
                     </div>
                     <div class="row pt-2">
                         <div class="col-6 text-center">
-                            <button class="btn btn-secondary" [disabled]="!form.valid"
-                                (click)="onReset()">Reset</button>
+                            <button class="btn btn-secondary" (click)="onReset()">Reset</button>
                         </div>
                         <div class="col-6 text-center">
-                            <button class="btn btn-success" [disabled]="!form.valid" (click)="onSaveClient()">
-                                {{projectObj.clientId != 0 ? 'Update Client' : 'Save Client'}}
-                            </button>
+                            <button type="submit" class="btn btn-success" [disabled]="projectForm.invalid">Save Project</button>
                         </div>
                     </div>
                 </form>
