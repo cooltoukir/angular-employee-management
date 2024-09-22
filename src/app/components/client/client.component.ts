@@ -3,16 +3,21 @@ import { Client } from '../../model/class/Client';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
 import { APIResponseModel } from '../../model/interface/role';
+import { UpperCasePipe } from '@angular/common';
+import { Constant } from '../../constant/Constant';
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, UpperCasePipe],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
 })
 
 export class ClientComponent implements OnInit {
+
+  required = Constant.VALIDATON_MESSAGE;
+
   clientObj: Client = new Client();
   clientList: Client[] = [];
 

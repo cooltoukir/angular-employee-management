@@ -6,12 +6,14 @@ import { APIResponseModel } from '../../model/interface/role';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../model/class/Client';
 import { EmployeeService } from '../../services/employee.service';
-import { IClientProjectsResponse } from '../../model/interface/ClientProjectsResponse';
+import { IClientProjectsResponse } from '../../model/interface/clientProjectsResponse';
+import { DatePipe } from '@angular/common';
+import { ClientProject } from '../../model/class/ClientProject';
 
 @Component({
   selector: 'app-client-project',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, DatePipe],
   templateUrl: './client-project.component.html',
   styleUrl: './client-project.component.css'
 })
@@ -39,6 +41,7 @@ export class ClientProjectComponent implements OnInit {
   clientProjectsList: IClientProjectsResponse[] = []
   employeeList: IEmployee[] = []
   clientList: Client[] = []
+  clientProjectObj: ClientProject = new ClientProject();
 
   ngOnInit(): void {
     this.loadClientProjects();
@@ -49,6 +52,32 @@ export class ClientProjectComponent implements OnInit {
   loadClientProjects() {
     this.clientProjectSrv.getAllClientProjects().subscribe((res: APIResponseModel) => {
       this.clientProjectsList = res.data;
+    })
+  }
+
+  onEdit(id: number) {
+    this.clientProjectSrv.getProjectByProjectId(id).subscribe((res: APIResponseModel) => {
+      this.clientProjectObj = res.data;
+
+      // Convert dates to ISO format if necessary
+      const startDate = new Date(this.clientProjectObj.startDate).toISOString().substring(0, 10);
+      const expectedEndDate = new Date(this.clientProjectObj.expectedEndDate).toISOString().substring(0, 10);
+
+      this.projectForm = new FormGroup({
+        clientProjectId: new FormControl(this.clientProjectObj.clientProjectId),
+        projectName: new FormControl(this.clientProjectObj.projectName),
+        startDate: new FormControl(startDate),
+        expectedEndDate: new FormControl(expectedEndDate),
+        leadByEmpId: new FormControl(this.clientProjectObj.leadByEmpId),
+        completedDate: new FormControl(this.clientProjectObj.completedDate),
+        contactPerson: new FormControl(this.clientProjectObj.contactPerson),
+        contactPersonContactNo: new FormControl(this.clientProjectObj.contactPersonContactNo),
+        totalEmpWorking: new FormControl(this.clientProjectObj.totalEmpWorking),
+        projectCost: new FormControl(this.clientProjectObj.projectCost),
+        projectDetails: new FormControl(this.clientProjectObj.projectDetails),
+        contactPersonEmailId: new FormControl(this.clientProjectObj.contactPersonEmailId),
+        clientId: new FormControl(this.clientProjectObj.clientId)
+      })
     })
   }
 
@@ -79,7 +108,21 @@ export class ClientProjectComponent implements OnInit {
   }
 
   onReset() {
-    this.projectForm.reset();
+    this.projectForm.reset({
+      clientProjectId: 0,
+      projectName: '',
+      startDate: '',
+      expectedEndDate: '',
+      leadByEmpId: '',
+      completedDate: '',
+      contactPerson: '',
+      contactPersonContactNo: '',
+      totalEmpWorking: '',
+      projectCost: '',
+      projectDetails: '',
+      contactPersonEmailId: '',
+      clientId: ''
+    });
   }
 
   onSavePorject() {

@@ -22,7 +22,7 @@
                                 @for (item of clientList; track $index) {
                                 <tr>
                                     <td>{{$index + 1}}</td>
-                                    <td>{{item.companyName}}</td>
+                                    <td>{{item.companyName | uppercase}}</td>
                                     <td>{{item.contactPersonName}}</td>
                                     <td>{{item.contactNo}}</td>
                                     <td>{{item.city}}</td>
@@ -55,7 +55,7 @@
                             @if (personName.touched) {
                             <div class="text-danger">
                                 @if (personName?.errors?.['required']) {
-                                <span>This Is Required</span>
+                                <span>{{required}}</span>
                                 }
                                 @if (personName?.errors?.['minlength']) {
                                 <span>Min 5 Chars Required</span>
@@ -70,7 +70,7 @@
                             @if (companyName.touched) {
                             <div class="text-danger">
                                 @if (companyName?.errors?.['required']) {
-                                <span>This Is Required</span>
+                                <span>{{required}}</span>
                                 }
                                 @if (companyName?.errors?.['minlength']) {
                                 <span>Min 3 Chars Required</span>
@@ -85,7 +85,7 @@
                             @if (contactNo.touched) {
                             <div class="text-danger">
                                 @if (contactNo?.errors?.['required']) {
-                                <span>This Is Required</span>
+                                <span>{{required}}</span>
                                 }
                                 @if (contactNo?.errors?.['minlength']) {
                                 <span>Min 4 Chars Required</span>
@@ -121,7 +121,7 @@
                             @if (gstNo.touched) {
                             <div class="text-danger">
                                 @if (gstNo?.errors?.['required']) {
-                                <span>This Is Required</span>
+                                <span>{{required}}</span>
                                 }
                                 @if (gstNo?.errors?.['minlength']) {
                                 <span>Min 2 Chars Required</span>
@@ -136,7 +136,7 @@
                             @if (regNo.touched) {
                             <div class="text-danger">
                                 @if (regNo?.errors?.['required']) {
-                                <span>This Is Required</span>
+                                <span>{{required}}</span>
                                 }
                                 @if (regNo?.errors?.['minlength']) {
                                 <span>Min 2 Chars Required</span>
