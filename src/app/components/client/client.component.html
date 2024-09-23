@@ -153,6 +153,10 @@
                             <button class="btn btn-secondary" (click)="onReset(form)">Reset</button>
                         </div>
                         <div class="col-6 text-center">
+
+                            <!-- <app-my-button (onBtnClicked)="onSaveClient($event, form)" [btnClass]="'btn btn-success'"
+                                [btnText]="clientObj.clientId != 0 ? 'Update Client' : 'Save Client'"></app-my-button> -->
+
                             <button class="btn btn-success" [disabled]="form.invalid" (click)="onSaveClient(form)">
                                 {{clientObj.clientId != 0 ? 'Update Client' : 'Save Client'}}
                             </button>

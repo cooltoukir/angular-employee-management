@@ -5,11 +5,12 @@ import { ClientService } from '../../services/client.service';
 import { APIResponseModel } from '../../model/interface/role';
 import { UpperCasePipe } from '@angular/common';
 import { Constant } from '../../constant/Constant';
+import { MyButtonComponent } from "../../reusableComponents/my-button/my-button.component";
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [FormsModule, UpperCasePipe],
+  imports: [FormsModule, UpperCasePipe, MyButtonComponent],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
 })
@@ -49,6 +50,19 @@ export class ClientComponent implements OnInit {
       }
     })
   }
+
+  // onSaveClient(data: string, form: NgForm) {
+  //   debugger;
+  //   this.clientService.addUpdate(this.clientObj).subscribe((res: APIResponseModel) => {
+  //     if (res.result) {
+  //       alert(res.message);
+  //       this.loadClient();
+  //       this.onReset(form);
+  //     } else {
+  //       alert(res.message);
+  //     }
+  //   })
+  // }
 
   onEdit(data: Client) {
     this.clientObj = { ...data };

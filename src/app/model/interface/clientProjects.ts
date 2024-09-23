@@ -1,4 +1,4 @@
-export interface IClientProjectsResponse {
+export interface IClientProjects {
     empName: string,
     empId: number,
     empCode: string,

@@ -1,1 +1,42 @@
-<p>employee works!</p>
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header bg-success text-white fw-bold">
+                Employee List
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sr No</th>
+                                    <th>Employee Name</th>
+                                    <th>Designation</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (item of employeeList(); track $index) {
+                                <tr>
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{item.empName}}</td>
+                                    <td>{{item.empDesignation}}</td>
+                                    <td>{{item.empEmailId}}</td>
+                                    <td>{{item.role}}</td>
+                                    <td>
+                                        <button class="btn btn-primary me-2">Edit</button>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

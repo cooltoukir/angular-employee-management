@@ -6,7 +6,7 @@ import { APIResponseModel } from '../../model/interface/role';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../model/class/Client';
 import { EmployeeService } from '../../services/employee.service';
-import { IClientProjectsResponse } from '../../model/interface/clientProjectsResponse';
+import { IClientProjects } from '../../model/interface/clientProjects';
 import { DatePipe } from '@angular/common';
 import { ClientProject } from '../../model/class/ClientProject';
 
@@ -38,7 +38,7 @@ export class ClientProjectComponent implements OnInit {
   clientProjectSrv = inject(ClientProjectService);
   employeeSrv = inject(EmployeeService);
   clientSrv = inject(ClientService);
-  clientProjectsList: IClientProjectsResponse[] = []
+  clientProjectsList: IClientProjects[] = []
   employeeList: IEmployee[] = []
   clientList: Client[] = []
   clientProjectObj: ClientProject = new ClientProject();
