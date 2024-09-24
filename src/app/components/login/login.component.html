@@ -1,0 +1,67 @@
+<div class="row">
+    @if (isLoader == true) {
+    <div class="col-12 text-center loader-container">
+        <div class="spinner-border text-muted custom-spinner"></div>
+        <div class="spinner-border text-primary custom-spinner"></div>
+        <div class="spinner-border text-success custom-spinner"></div>
+        <div class="spinner-border text-info custom-spinner"></div>
+        <div class="spinner-border text-warning custom-spinner"></div>
+        <div class="spinner-border text-danger custom-spinner"></div>
+        <div class="spinner-border text-secondary custom-spinner"></div>
+        <div class="spinner-border text-dark custom-spinner"></div>
+        <div class="spinner-border text-light custom-spinner"></div>
+    </div>
+    } @else {
+    <!-- Section: Design Block -->
+    <section class=" text-center text-lg-start">
+        <div class="container pt-5">
+            <app-alert [alertType]="'info'"
+                [message]="'This employee management site is under development'"></app-alert>
+            <div class="card mb-3 extra-space">
+                <div class="row g-0 d-flex align-items-center">
+
+                    <!-- Image section -->
+                    <div class="col-lg-4 d-none d-lg-flex">
+                        <img src="https://cdn.pixabay.com/photo/2023/06/15/17/07/sun-8066051_640.jpg"
+                            alt="Trendy Pants and Shoes" class="w-100 rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5" />
+                    </div>
+
+                    <!-- Form section -->
+                    <div class="col-lg-8">
+                        <div class="card-body py-5 px-md-5">
+                            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                                <!-- Email input -->
+                                <div class="form-floating mb-3 col-md-8 mx-auto">
+                                    <input type="email" class="form-control" id="email" placeholder="name@example.com"
+                                        formControlName="email">
+                                    <label for="email">Email address</label>
+                                </div>
+
+                                <!-- Password input with eye icon to toggle visibility -->
+                                <div class="form-floating mb-3 col-md-8 mx-auto position-relative">
+                                    <input [type]="passwordFieldType" class="form-control" id="password"
+                                        placeholder="Password" formControlName="password">
+                                    <label for="password">Password</label>
+                                    <span class="position-absolute end-0 top-50 translate-middle-y me-3"
+                                        style="cursor: pointer;" (click)="togglePasswordVisibility()">
+                                        <i
+                                            [ngClass]="passwordFieldType === 'password' ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                                    </span>
+                                </div>
+
+                                <!-- Login button -->
+                                <div class="d-grid col-md-8 mx-auto">
+                                    <button class="btn btn-success text-uppercase" type="submit"
+                                        [disabled]="!loginForm.valid">Log in</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section: Design Block -->
+    }
+</div>

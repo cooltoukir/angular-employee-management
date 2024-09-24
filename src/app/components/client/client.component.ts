@@ -34,35 +34,24 @@ export class ClientComponent implements OnInit {
     })
   }
 
-  onReset(form: NgForm) {
+  onReset(data: string, form: NgForm) {
+    debugger;
     form.resetForm();
     this.clientObj = new Client();
   }
 
   onSaveClient(form: NgForm) {
+    debugger;
     this.clientService.addUpdate(this.clientObj).subscribe((res: APIResponseModel) => {
       if (res.result) {
         alert(res.message);
         this.loadClient();
-        this.onReset(form);
+        this.onReset('Save', form);
       } else {
         alert(res.message);
       }
     })
   }
-
-  // onSaveClient(data: string, form: NgForm) {
-  //   debugger;
-  //   this.clientService.addUpdate(this.clientObj).subscribe((res: APIResponseModel) => {
-  //     if (res.result) {
-  //       alert(res.message);
-  //       this.loadClient();
-  //       this.onReset(form);
-  //     } else {
-  //       alert(res.message);
-  //     }
-  //   })
-  // }
 
   onEdit(data: Client) {
     this.clientObj = { ...data };
