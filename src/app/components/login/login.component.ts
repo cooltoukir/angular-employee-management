@@ -52,7 +52,9 @@ export class LoginComponent {
           }
         },
         error: (error) => {
+          this.isLoader = false;
           console.error('Login error:', error);
+          alert(error.message);
         },
         complete: () => {
           this.isLoader = false;

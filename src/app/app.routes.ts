@@ -6,6 +6,7 @@ import { ClientProjectComponent } from './components/client-project/client-proje
 import { LoginComponent } from './components/login/login.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { authGuard } from './guard/auth.guard';
+import { loginGuard } from './guard/login.guard';
 
 export const routes: Routes = [
     {
@@ -15,7 +16,8 @@ export const routes: Routes = [
     },
     {
         path:'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate:[loginGuard]
     },
     {
         path:'',
